@@ -1,0 +1,546 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		9EEDD6E92DD36E1400C8D787 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9EEDD6D22DD36E1200C8D787 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9EEDD6D92DD36E1200C8D787;
+			remoteInfo = MIDIVelocityScaler;
+		};
+		9EEDD6F32DD36E1400C8D787 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9EEDD6D22DD36E1200C8D787 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9EEDD6D92DD36E1200C8D787;
+			remoteInfo = MIDIVelocityScaler;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9EEDD6DA2DD36E1200C8D787 /* MIDIVelocityScaler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MIDIVelocityScaler.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EEDD6E82DD36E1400C8D787 /* MIDIVelocityScalerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MIDIVelocityScalerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EEDD6F22DD36E1400C8D787 /* MIDIVelocityScalerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MIDIVelocityScalerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		9EEDD6DC2DD36E1200C8D787 /* MIDIVelocityScaler */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MIDIVelocityScaler;
+			sourceTree = "<group>";
+		};
+		9EEDD6EB2DD36E1400C8D787 /* MIDIVelocityScalerTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MIDIVelocityScalerTests;
+			sourceTree = "<group>";
+		};
+		9EEDD6F52DD36E1400C8D787 /* MIDIVelocityScalerUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MIDIVelocityScalerUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9EEDD6D72DD36E1200C8D787 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EEDD6E52DD36E1400C8D787 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EEDD6EF2DD36E1400C8D787 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9EEDD6D12DD36E1200C8D787 = {
+			isa = PBXGroup;
+			children = (
+				9EEDD6DC2DD36E1200C8D787 /* MIDIVelocityScaler */,
+				9EEDD6EB2DD36E1400C8D787 /* MIDIVelocityScalerTests */,
+				9EEDD6F52DD36E1400C8D787 /* MIDIVelocityScalerUITests */,
+				9EEDD6DB2DD36E1200C8D787 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9EEDD6DB2DD36E1200C8D787 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9EEDD6DA2DD36E1200C8D787 /* MIDIVelocityScaler.app */,
+				9EEDD6E82DD36E1400C8D787 /* MIDIVelocityScalerTests.xctest */,
+				9EEDD6F22DD36E1400C8D787 /* MIDIVelocityScalerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9EEDD6D92DD36E1200C8D787 /* MIDIVelocityScaler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9EEDD6FC2DD36E1400C8D787 /* Build configuration list for PBXNativeTarget "MIDIVelocityScaler" */;
+			buildPhases = (
+				9EEDD6D62DD36E1200C8D787 /* Sources */,
+				9EEDD6D72DD36E1200C8D787 /* Frameworks */,
+				9EEDD6D82DD36E1200C8D787 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				9EEDD6DC2DD36E1200C8D787 /* MIDIVelocityScaler */,
+			);
+			name = MIDIVelocityScaler;
+			packageProductDependencies = (
+			);
+			productName = MIDIVelocityScaler;
+			productReference = 9EEDD6DA2DD36E1200C8D787 /* MIDIVelocityScaler.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9EEDD6E72DD36E1400C8D787 /* MIDIVelocityScalerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9EEDD6FF2DD36E1400C8D787 /* Build configuration list for PBXNativeTarget "MIDIVelocityScalerTests" */;
+			buildPhases = (
+				9EEDD6E42DD36E1400C8D787 /* Sources */,
+				9EEDD6E52DD36E1400C8D787 /* Frameworks */,
+				9EEDD6E62DD36E1400C8D787 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9EEDD6EA2DD36E1400C8D787 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				9EEDD6EB2DD36E1400C8D787 /* MIDIVelocityScalerTests */,
+			);
+			name = MIDIVelocityScalerTests;
+			packageProductDependencies = (
+			);
+			productName = MIDIVelocityScalerTests;
+			productReference = 9EEDD6E82DD36E1400C8D787 /* MIDIVelocityScalerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9EEDD6F12DD36E1400C8D787 /* MIDIVelocityScalerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9EEDD7022DD36E1400C8D787 /* Build configuration list for PBXNativeTarget "MIDIVelocityScalerUITests" */;
+			buildPhases = (
+				9EEDD6EE2DD36E1400C8D787 /* Sources */,
+				9EEDD6EF2DD36E1400C8D787 /* Frameworks */,
+				9EEDD6F02DD36E1400C8D787 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9EEDD6F42DD36E1400C8D787 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				9EEDD6F52DD36E1400C8D787 /* MIDIVelocityScalerUITests */,
+			);
+			name = MIDIVelocityScalerUITests;
+			packageProductDependencies = (
+			);
+			productName = MIDIVelocityScalerUITests;
+			productReference = 9EEDD6F22DD36E1400C8D787 /* MIDIVelocityScalerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9EEDD6D22DD36E1200C8D787 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					9EEDD6D92DD36E1200C8D787 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					9EEDD6E72DD36E1400C8D787 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 9EEDD6D92DD36E1200C8D787;
+					};
+					9EEDD6F12DD36E1400C8D787 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 9EEDD6D92DD36E1200C8D787;
+					};
+				};
+			};
+			buildConfigurationList = 9EEDD6D52DD36E1200C8D787 /* Build configuration list for PBXProject "MIDIVelocityScaler" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9EEDD6D12DD36E1200C8D787;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 9EEDD6DB2DD36E1200C8D787 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9EEDD6D92DD36E1200C8D787 /* MIDIVelocityScaler */,
+				9EEDD6E72DD36E1400C8D787 /* MIDIVelocityScalerTests */,
+				9EEDD6F12DD36E1400C8D787 /* MIDIVelocityScalerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9EEDD6D82DD36E1200C8D787 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EEDD6E62DD36E1400C8D787 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EEDD6F02DD36E1400C8D787 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9EEDD6D62DD36E1200C8D787 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EEDD6E42DD36E1400C8D787 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EEDD6EE2DD36E1400C8D787 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9EEDD6EA2DD36E1400C8D787 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9EEDD6D92DD36E1200C8D787 /* MIDIVelocityScaler */;
+			targetProxy = 9EEDD6E92DD36E1400C8D787 /* PBXContainerItemProxy */;
+		};
+		9EEDD6F42DD36E1400C8D787 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9EEDD6D92DD36E1200C8D787 /* MIDIVelocityScaler */;
+			targetProxy = 9EEDD6F32DD36E1400C8D787 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		9EEDD6FA2DD36E1400C8D787 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9EEDD6FB2DD36E1400C8D787 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		9EEDD6FD2DD36E1400C8D787 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MIDIVelocityScaler/MIDIVelocityScaler.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joseph.MIDIVelocityScaler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		9EEDD6FE2DD36E1400C8D787 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MIDIVelocityScaler/MIDIVelocityScaler.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joseph.MIDIVelocityScaler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		9EEDD7002DD36E1400C8D787 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joseph.MIDIVelocityScalerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MIDIVelocityScaler.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MIDIVelocityScaler";
+			};
+			name = Debug;
+		};
+		9EEDD7012DD36E1400C8D787 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joseph.MIDIVelocityScalerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MIDIVelocityScaler.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MIDIVelocityScaler";
+			};
+			name = Release;
+		};
+		9EEDD7032DD36E1400C8D787 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joseph.MIDIVelocityScalerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = MIDIVelocityScaler;
+			};
+			name = Debug;
+		};
+		9EEDD7042DD36E1400C8D787 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joseph.MIDIVelocityScalerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = MIDIVelocityScaler;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9EEDD6D52DD36E1200C8D787 /* Build configuration list for PBXProject "MIDIVelocityScaler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9EEDD6FA2DD36E1400C8D787 /* Debug */,
+				9EEDD6FB2DD36E1400C8D787 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9EEDD6FC2DD36E1400C8D787 /* Build configuration list for PBXNativeTarget "MIDIVelocityScaler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9EEDD6FD2DD36E1400C8D787 /* Debug */,
+				9EEDD6FE2DD36E1400C8D787 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9EEDD6FF2DD36E1400C8D787 /* Build configuration list for PBXNativeTarget "MIDIVelocityScalerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9EEDD7002DD36E1400C8D787 /* Debug */,
+				9EEDD7012DD36E1400C8D787 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9EEDD7022DD36E1400C8D787 /* Build configuration list for PBXNativeTarget "MIDIVelocityScalerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9EEDD7032DD36E1400C8D787 /* Debug */,
+				9EEDD7042DD36E1400C8D787 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9EEDD6D22DD36E1200C8D787 /* Project object */;
+}
