@@ -1,17 +1,10 @@
-//
-//  MIDIVelocityScalerApp.swift
-//  MIDIVelocityScaler
-//
-//  Created by Joseph Aveltsev on 13.05.2025.
-//
-
 import SwiftUI
 
 @main
 struct MIDIVelocityScalerApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+        Settings {} // Required to keep app running
     }
 }

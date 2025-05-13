@@ -1,9 +1,61 @@
+//
+//  AppDelegate.swift
+//  MIDIVelocityScaler
+//
+//  Created by Joseph Aveltsev on 13.05.2025.
+//
+
+
 import Cocoa
 import SwiftUI
+import CoreMIDI
 
 class AppDelegate: NSObject, NSApplicationDelegate {
+    struct Device: Hashable {
+        let name: String
+        let port: String
+    }
+
     var statusItem: NSStatusItem!
     var settingsWindow: NSWindow?
+    var midiClient = MIDIClientRef()
+    var selectedDevices: Set<Device> = []
+    var velocityScalePercent: Int = 83
+
+    func midiInputDeviceNames() -> [Device] {
+        var devices: [Device] = []
+
+        let sourceCount = MIDIGetNumberOfSources()
+        for i in 0..<sourceCount {
+            let endpoint = MIDIGetSource(i)
+            var entity = MIDIEntityRef()
+            var device = MIDIDeviceRef()
+
+            if MIDIEndpointGetEntity(endpoint, &entity) == noErr {
+                if MIDIEntityGetDevice(entity, &device) == noErr {
+                    var name: Unmanaged<CFString>?
+                    if MIDIObjectGetStringProperty(device, kMIDIPropertyName, &name) == noErr, let cfName = name?.takeRetainedValue() {
+                        var portName: Unmanaged<CFString>?
+                        if MIDIObjectGetStringProperty(endpoint, kMIDIPropertyName, &portName) == noErr, let cfPortName = portName?.takeRetainedValue() {
+                            devices.append(Device(name: cfName as String, port: cfPortName as String))
+                        }
+                    }
+                }
+            }
+        }
+
+        return devices
+    }
+
+    func updateMenu() {
+        print("Updating MIDI menu...")
+
+        let menu = NSMenu()
+        menu.addItem(NSMenuItem(title: "Open Settings", action: #selector(openSettings), keyEquivalent: "s"))
+        menu.addItem(.separator())
+        menu.addItem(NSMenuItem(title: "Quit", action: #selector(quit), keyEquivalent: "q"))
+        statusItem.menu = menu
+    }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
@@ -12,11 +64,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.image = NSImage(systemSymbolName: "pianokeys", accessibilityDescription: "MIDI Tool")
         }
 
-        let menu = NSMenu()
-        menu.addItem(NSMenuItem(title: "Open Settings", action: #selector(openSettings), keyEquivalent: "s"))
-        menu.addItem(.separator())
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(quit), keyEquivalent: "q"))
-        statusItem.menu = menu
+        // Select all devices by default
+        // let allDevices = midiInputDeviceNames()
+        // for device in allDevices {
+        //     selectedDevices.insert(device)
+        // }
+        
+        updateMenu()
+
+        MIDIClientCreateWithBlock("MIDIVelocityScalerClient" as CFString, &midiClient) { [weak self] notification in
+            print("Received MIDI system notification.")
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.updateMenu()
+            }
+        }
     }
 
     @objc func openSettings() {
@@ -47,5 +109,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc func quit() {
         NSApp.terminate(nil)
+    }
+    
+    @objc func velocityFieldChanged(_ sender: NSTextField) {
+        if let value = Int(sender.stringValue), (1...100).contains(value) {
+            velocityScalePercent = value
+            print("Velocity scale set to \(value)%")
+        } else {
+            sender.stringValue = "\(velocityScalePercent)"
+        }
     }
 }
