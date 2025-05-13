@@ -60,6 +60,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Hide the Dock icon – run as an accessory/agent
+        NSApp.setActivationPolicy(.accessory)
+
         statusItem = NSStatusBar.system.statusItem(
             withLength: NSStatusItem.squareLength
         )
