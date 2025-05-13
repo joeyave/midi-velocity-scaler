@@ -11,6 +11,11 @@ import SwiftUI
 class AppState: ObservableObject {
     static let shared = AppState()
 
+    private let defaults = UserDefaults.standard
+    private let kInputDevicesKey = "selectedInputDeviceIDs"
+    private let kOutputDeviceKey = "selectedOutputDeviceID"
+    private let kVelocityKey = "velocityScalePercent"
+
     struct Device: Hashable, Identifiable {
         var id: MIDIUniqueID
         let name: String
@@ -37,6 +42,8 @@ class AppState: ObservableObject {
                     MIDIPortDisconnectSource(inputPort, src)
                 }
             }
+            let ids = selectedInputDevice.map { $0.id }
+            defaults.set(ids, forKey: kInputDevicesKey)
         }
     }
     @Published var availableOutputDevices: [Device] = [] {
@@ -51,18 +58,24 @@ class AppState: ObservableObject {
                     for: outDev.id,
                     isSource: false
                 )
+                defaults.set(outDev.id, forKey: kOutputDeviceKey)
             } else {
                 selectedOutputEndpoint = nil
+                defaults.removeObject(forKey: kOutputDeviceKey)
             }
         }
     }
 
-    @Published var velocityScalePercent: Int = 83
+    @Published var velocityScalePercent: Int = 83 {
+        didSet { defaults.set(velocityScalePercent, forKey: kVelocityKey) }
+    }
 
     private var midiClient = MIDIClientRef()
     private var inputPort = MIDIPortRef()
     private var outputPort = MIDIPortRef()
     private var selectedOutputEndpoint: MIDIEndpointRef?
+    private var hasInitializedInputs = false
+    private var knownInputDeviceIDs: Set<MIDIUniqueID> = []
 
     // MIDI read callback for incoming packets
     private static let midiReadProc: MIDIReadProc = {
@@ -95,6 +108,10 @@ class AppState: ObservableObject {
             "OutputPort" as CFString,
             &outputPort
         )
+        // Load saved velocity
+        if let storedVel = defaults.object(forKey: kVelocityKey) as? Int {
+            velocityScalePercent = storedVel
+        }
         // Initial driver list
         updateOutputDevices()
         updateInputDevices()
@@ -150,7 +167,15 @@ class AppState: ObservableObject {
         }
         DispatchQueue.main.async {
             self.availableOutputDevices = drivers
-            if self.selectedOutputDevice == nil, let first = drivers.first {
+            if let storedID = self.defaults.object(
+                forKey: self.kOutputDeviceKey
+            ) as? MIDIUniqueID,
+                let stored = drivers.first(where: { $0.id == storedID })
+            {
+                self.selectedOutputDevice = stored
+            } else if self.selectedOutputDevice == nil,
+                let first = drivers.first
+            {
                 self.selectedOutputDevice = first
             }
             if let sel = self.selectedOutputDevice {
@@ -162,7 +187,6 @@ class AppState: ObservableObject {
         }
     }
 
-    private var hasInitializedInputs = false
     private func updateInputDevices() {
         var inputs: [Device] = []
         let count = MIDIGetNumberOfSources()
@@ -199,17 +223,27 @@ class AppState: ObservableObject {
         }
         DispatchQueue.main.async {
             self.availableInputDevices = inputs
-            // On first scan, select all inputs; on subsequent scans, add newly connected
+            let currentIDs = Set(inputs.map { $0.id })
+            // On first scan, restore or select all; thereafter only add truly new devices
             if !self.hasInitializedInputs {
-                // First launch: select all inputs
-                self.selectedInputDevice = Set(inputs)
+                if let stored = self.defaults.object(
+                    forKey: self.kInputDevicesKey
+                ) as? [MIDIUniqueID] {
+                    self.selectedInputDevice = Set(
+                        inputs.filter { stored.contains($0.id) }
+                    )
+                } else {
+                    self.selectedInputDevice = Set(inputs)
+                }
                 self.hasInitializedInputs = true
+                // Initialize known IDs
+                self.knownInputDeviceIDs = currentIDs
             } else {
-                // On subsequent scans: enable any newly connected inputs by default
-                let newlyConnected = Set(inputs).subtracting(
-                    self.selectedInputDevice
-                )
-                self.selectedInputDevice.formUnion(newlyConnected)
+                // Only auto-select devices never seen before
+                let brandNew = currentIDs.subtracting(self.knownInputDeviceIDs)
+                let newDevices = inputs.filter { brandNew.contains($0.id) }
+                self.selectedInputDevice.formUnion(newDevices)
+                self.knownInputDeviceIDs.formUnion(currentIDs)
             }
             // reconnect only selected inputs
             for dev in self.selectedInputDevice {
@@ -277,6 +311,23 @@ class AppState: ObservableObject {
         state.updateOutputDevices()
         state.updateInputDevices()
     }
+
+    /// Restore all settings back to app defaults
+    func restoreDefaults() {
+        // Clear saved settings
+        defaults.removeObject(forKey: kVelocityKey)
+        defaults.removeObject(forKey: kInputDevicesKey)
+        defaults.removeObject(forKey: kOutputDeviceKey)
+        // Reset in-memory flags
+        hasInitializedInputs = false
+        knownInputDeviceIDs.removeAll()
+        // Reset values to initial defaults
+        velocityScalePercent = 83
+        selectedOutputDevice = nil
+        // Re-scan and reapply defaults
+        updateOutputDevices()
+        updateInputDevices()
+    }
 }
 
 struct ContentView: View {
@@ -289,6 +340,7 @@ struct ContentView: View {
         return fmt
     }()
     @StateObject private var state = AppState.shared
+    @State private var showIACAlert = false
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -301,9 +353,11 @@ struct ContentView: View {
                 )
                 .foregroundColor(.red)
                 .font(.subheadline)
+                .lineLimit(nil)  // remove the single‐line cap
+                .fixedSize(horizontal: false, vertical: true)  // let it take as many lines as it needs
             } else {
                 Picker(
-                    "MIDI Output Driver",
+                    "IAC Driver",
                     selection: Binding(
                         get: { state.selectedOutputDevice },
                         set: { state.selectedOutputDevice = $0 }
@@ -351,10 +405,26 @@ struct ContentView: View {
                 Text("%")
             }
 
+            Button("Restore Defaults") {
+                state.restoreDefaults()
+            }
+            .padding(.top)
+
             Spacer()
+        }
+        .onAppear {
+            if state.availableOutputDevices.isEmpty {
+                showIACAlert = true
+            }
         }
         .padding()
         .frame(minWidth: 300, minHeight: 350)
+        .alert("No IAC Driver Detected",
+               isPresented: $showIACAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("Please enable the IAC Driver in Audio MIDI Setup → Window → Show MIDI Studio, then activate it.")
+        }
     }
 }
 
