@@ -23,46 +23,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var selectedDevices: Set<Device> = []
     var velocityScalePercent: Int = 83
 
-    func midiInputDeviceNames() -> [Device] {
-        var devices: [Device] = []
-
-        let sourceCount = MIDIGetNumberOfSources()
-        for i in 0..<sourceCount {
-            let endpoint = MIDIGetSource(i)
-            var entity = MIDIEntityRef()
-            var device = MIDIDeviceRef()
-
-            if MIDIEndpointGetEntity(endpoint, &entity) == noErr {
-                if MIDIEntityGetDevice(entity, &device) == noErr {
-                    var name: Unmanaged<CFString>?
-                    if MIDIObjectGetStringProperty(
-                        device,
-                        kMIDIPropertyName,
-                        &name
-                    ) == noErr, let cfName = name?.takeRetainedValue() {
-                        var portName: Unmanaged<CFString>?
-                        if MIDIObjectGetStringProperty(
-                            endpoint,
-                            kMIDIPropertyName,
-                            &portName
-                        ) == noErr,
-                            let cfPortName = portName?.takeRetainedValue()
-                        {
-                            devices.append(
-                                Device(
-                                    name: cfName as String,
-                                    port: cfPortName as String
-                                )
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        return devices
-    }
-
     func updateMenu() {
         print("Updating MIDI menu...")
 
@@ -105,16 +65,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             )
         }
 
-        // Select all devices by default
-        // let allDevices = midiInputDeviceNames()
-        // for device in allDevices {
-        //     selectedDevices.insert(device)
-        // }
-
         // Force AppState initialization to start MIDI processing
         _ = appState
 
-        updateMenu()
+        // Defer initial menu update until after AppState finishes loading devices
+        DispatchQueue.main.async {
+            self.updateMenu()
+        }
 
         MIDIClientCreateWithBlock(
             "MIDIVelocityScalerClient" as CFString,

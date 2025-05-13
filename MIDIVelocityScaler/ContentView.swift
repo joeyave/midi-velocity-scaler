@@ -418,7 +418,7 @@ struct ContentView: View {
             Spacer()
         }
         .padding()
-        .frame(minWidth: 300, minHeight: 350)
+        .frame(minWidth: 300, minHeight: 370)
     }
 }
 
