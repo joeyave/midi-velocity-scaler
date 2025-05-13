@@ -5,8 +5,8 @@
 //  Created by Joseph Aveltsev on 13.05.2025.
 //
 
-import SwiftUI
 import CoreMIDI
+import SwiftUI
 
 class AppState: ObservableObject {
     static let shared = AppState()
@@ -47,7 +47,10 @@ class AppState: ObservableObject {
             print("🔄 selectedOutputDevice →", selectedOutputDevice as Any)
             // Update the MIDI endpoint for the newly selected output device
             if let outDev = selectedOutputDevice {
-                selectedOutputEndpoint = endpointRef(for: outDev.id, isSource: false)
+                selectedOutputEndpoint = endpointRef(
+                    for: outDev.id,
+                    isSource: false
+                )
             } else {
                 selectedOutputEndpoint = nil
             }
@@ -62,30 +65,45 @@ class AppState: ObservableObject {
     private var selectedOutputEndpoint: MIDIEndpointRef?
 
     // MIDI read callback for incoming packets
-    private static let midiReadProc: MIDIReadProc = { packetListPtr, refCon, srcConnRefCon in
-        let state = Unmanaged<AppState>.fromOpaque(refCon!).takeUnretainedValue()
+    private static let midiReadProc: MIDIReadProc = {
+        packetListPtr,
+        refCon,
+        srcConnRefCon in
+        let state = Unmanaged<AppState>.fromOpaque(refCon!)
+            .takeUnretainedValue()
         state.handlePacketList(packetListPtr.pointee)
     }
 
     private init() {
         // Create CoreMIDI client with a notify handler
-        MIDIClientCreate("ScalerClient" as CFString,
-                         AppState.notifyCallback,
-                         UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()),
-                         &midiClient)
+        MIDIClientCreate(
+            "ScalerClient" as CFString,
+            AppState.notifyCallback,
+            UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()),
+            &midiClient
+        )
         // create input & output ports
-        MIDIInputPortCreate(midiClient, "InputPort" as CFString,
-                            AppState.midiReadProc,
-                            UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()),
-                            &inputPort)
-        MIDIOutputPortCreate(midiClient, "OutputPort" as CFString,
-                             &outputPort)
+        MIDIInputPortCreate(
+            midiClient,
+            "InputPort" as CFString,
+            AppState.midiReadProc,
+            UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()),
+            &inputPort
+        )
+        MIDIOutputPortCreate(
+            midiClient,
+            "OutputPort" as CFString,
+            &outputPort
+        )
         // Initial driver list
         updateOutputDevices()
         updateInputDevices()
         // wire existing selections
         if let outDev = selectedOutputDevice {
-            selectedOutputEndpoint = endpointRef(for: outDev.id, isSource: false)
+            selectedOutputEndpoint = endpointRef(
+                for: outDev.id,
+                isSource: false
+            )
         }
         // connect any selected input devices
         for dev in selectedInputDevice {
@@ -100,13 +118,16 @@ class AppState: ObservableObject {
         let count = MIDIGetNumberOfDestinations()
         for i in 0..<count {
             let endpoint = MIDIGetDestination(i)
-            
+
             // Display name
             var cfDisplayName: Unmanaged<CFString>?
-            MIDIObjectGetStringProperty(endpoint,
-                                        kMIDIPropertyDisplayName,
-                                        &cfDisplayName)
-            let displayName = cfDisplayName?.takeRetainedValue() as String? ?? "Unknown"
+            MIDIObjectGetStringProperty(
+                endpoint,
+                kMIDIPropertyDisplayName,
+                &cfDisplayName
+            )
+            let displayName =
+                cfDisplayName?.takeRetainedValue() as String? ?? "Unknown"
 
             // Model property
             var cfModel: Unmanaged<CFString>?
@@ -119,9 +140,11 @@ class AppState: ObservableObject {
 
             // Unique ID
             var uid: MIDIUniqueID = 0
-            MIDIObjectGetIntegerProperty(endpoint,
-                                         kMIDIPropertyUniqueID,
-                                         &uid)
+            MIDIObjectGetIntegerProperty(
+                endpoint,
+                kMIDIPropertyUniqueID,
+                &uid
+            )
 
             drivers.append(Device(id: uid, name: displayName))
         }
@@ -131,24 +154,30 @@ class AppState: ObservableObject {
                 self.selectedOutputDevice = first
             }
             if let sel = self.selectedOutputDevice {
-                self.selectedOutputEndpoint = self.endpointRef(for: sel.id, isSource: false)
+                self.selectedOutputEndpoint = self.endpointRef(
+                    for: sel.id,
+                    isSource: false
+                )
             }
         }
     }
-    
+
     private var hasInitializedInputs = false
     private func updateInputDevices() {
         var inputs: [Device] = []
         let count = MIDIGetNumberOfSources()
         for i in 0..<count {
             let endpoint = MIDIGetSource(i)
-            
+
             // Display name
             var cfDisplayName: Unmanaged<CFString>?
-            MIDIObjectGetStringProperty(endpoint,
-                                        kMIDIPropertyDisplayName,
-                                        &cfDisplayName)
-            let displayName = cfDisplayName?.takeRetainedValue() as String? ?? "Unknown"
+            MIDIObjectGetStringProperty(
+                endpoint,
+                kMIDIPropertyDisplayName,
+                &cfDisplayName
+            )
+            let displayName =
+                cfDisplayName?.takeRetainedValue() as String? ?? "Unknown"
 
             // Model property
             var cfModel: Unmanaged<CFString>?
@@ -160,10 +189,12 @@ class AppState: ObservableObject {
             }
             // Unique ID
             var uid: MIDIUniqueID = 0
-            MIDIObjectGetIntegerProperty(endpoint,
-                                         kMIDIPropertyUniqueID,
-                                         &uid)
-           
+            MIDIObjectGetIntegerProperty(
+                endpoint,
+                kMIDIPropertyUniqueID,
+                &uid
+            )
+
             inputs.append(Device(id: uid, name: displayName))
         }
         DispatchQueue.main.async {
@@ -175,7 +206,9 @@ class AppState: ObservableObject {
                 self.hasInitializedInputs = true
             } else {
                 // On subsequent scans: enable any newly connected inputs by default
-                let newlyConnected = Set(inputs).subtracting(self.selectedInputDevice)
+                let newlyConnected = Set(inputs).subtracting(
+                    self.selectedInputDevice
+                )
                 self.selectedInputDevice.formUnion(newlyConnected)
             }
             // reconnect only selected inputs
@@ -187,8 +220,11 @@ class AppState: ObservableObject {
         }
     }
 
-    private func endpointRef(for uid: MIDIUniqueID, isSource: Bool) -> MIDIEndpointRef? {
-        let count = isSource ? MIDIGetNumberOfSources() : MIDIGetNumberOfDestinations()
+    private func endpointRef(for uid: MIDIUniqueID, isSource: Bool)
+        -> MIDIEndpointRef?
+    {
+        let count =
+            isSource ? MIDIGetNumberOfSources() : MIDIGetNumberOfDestinations()
         for i in 0..<count {
             let ep = isSource ? MIDIGetSource(i) : MIDIGetDestination(i)
             var propUID: MIDIUniqueID = 0
@@ -210,16 +246,22 @@ class AppState: ObservableObject {
             if status == 0x90 {
                 let note = data.1
                 // semitones 1,3,6,8,10 are black keys
-                if [1,3,6,8,10].contains(Int(note % 12)) {
+                if [1, 3, 6, 8, 10].contains(Int(note % 12)) {
                     let vel = Int(data.2)
-                    let newVel = UInt8(max(1, min(127, vel * velocityScalePercent / 100)))
+                    let newVel = UInt8(
+                        max(1, min(127, vel * velocityScalePercent / 100))
+                    )
                     data.2 = newVel
                 }
             }
-            writer = MIDIPacketListAdd(&scaledList, mtu, writer,
-                                       packetPtr.timeStamp,
-                                       Int(packetPtr.length),
-                                       &data)
+            writer = MIDIPacketListAdd(
+                &scaledList,
+                mtu,
+                writer,
+                packetPtr.timeStamp,
+                Int(packetPtr.length),
+                &data
+            )
             packetPtr = MIDIPacketNext(&packetPtr).pointee
         }
         if let dest = selectedOutputEndpoint {
@@ -227,7 +269,9 @@ class AppState: ObservableObject {
         }
     }
 
-    private static let notifyCallback: MIDINotifyProc = { notificationPtr, refCon in
+    private static let notifyCallback: MIDINotifyProc = {
+        notificationPtr,
+        refCon in
         guard let refCon = refCon else { return }
         let state = Unmanaged<AppState>.fromOpaque(refCon).takeUnretainedValue()
         state.updateOutputDevices()
@@ -252,14 +296,19 @@ struct ContentView: View {
                 .font(.headline)
 
             if state.availableOutputDevices.isEmpty {
-                Text("No IAC drivers enabled. Enable IAC Driver in Audio MIDI Setup → Window → Show MIDI Studio, then activate it.")
-                    .foregroundColor(.red)
-                    .font(.subheadline)
+                Text(
+                    "No IAC drivers enabled. Enable IAC Driver in Audio MIDI Setup → Window → Show MIDI Studio, then activate it."
+                )
+                .foregroundColor(.red)
+                .font(.subheadline)
             } else {
-                Picker("MIDI Output Driver", selection: Binding(
-                    get: { state.selectedOutputDevice },
-                    set: { state.selectedOutputDevice = $0 }
-                )) {
+                Picker(
+                    "MIDI Output Driver",
+                    selection: Binding(
+                        get: { state.selectedOutputDevice },
+                        set: { state.selectedOutputDevice = $0 }
+                    )
+                ) {
                     ForEach(state.availableOutputDevices) { driver in
                         Text(driver.name)
                             .tag(driver)
@@ -272,16 +321,18 @@ struct ContentView: View {
                 .font(.headline)
             List {
                 ForEach(state.availableInputDevices) { device in
-                    Toggle(isOn: Binding(
-                        get: { state.selectedInputDevice.contains(device) },
-                        set: { isSelected in
-                            if isSelected {
-                                state.selectedInputDevice.insert(device)
-                            } else {
-                                state.selectedInputDevice.remove(device)
+                    Toggle(
+                        isOn: Binding(
+                            get: { state.selectedInputDevice.contains(device) },
+                            set: { isSelected in
+                                if isSelected {
+                                    state.selectedInputDevice.insert(device)
+                                } else {
+                                    state.selectedInputDevice.remove(device)
+                                }
                             }
-                        }
-                    )) {
+                        )
+                    ) {
                         Text(device.name)
                     }
                 }
@@ -290,9 +341,13 @@ struct ContentView: View {
 
             HStack {
                 Text("Velocity Scale:")
-                TextField("", value: $state.velocityScalePercent, formatter: numberFormatter)
-                    .frame(width: 50)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                TextField(
+                    "",
+                    value: $state.velocityScalePercent,
+                    formatter: numberFormatter
+                )
+                .frame(width: 50)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
                 Text("%")
             }
 

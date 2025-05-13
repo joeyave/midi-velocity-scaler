@@ -5,10 +5,9 @@
 //  Created by Joseph Aveltsev on 13.05.2025.
 //
 
-
 import Cocoa
-import SwiftUI
 import CoreMIDI
+import SwiftUI
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     struct Device: Hashable {
@@ -34,10 +33,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if MIDIEndpointGetEntity(endpoint, &entity) == noErr {
                 if MIDIEntityGetDevice(entity, &device) == noErr {
                     var name: Unmanaged<CFString>?
-                    if MIDIObjectGetStringProperty(device, kMIDIPropertyName, &name) == noErr, let cfName = name?.takeRetainedValue() {
+                    if MIDIObjectGetStringProperty(
+                        device,
+                        kMIDIPropertyName,
+                        &name
+                    ) == noErr, let cfName = name?.takeRetainedValue() {
                         var portName: Unmanaged<CFString>?
-                        if MIDIObjectGetStringProperty(endpoint, kMIDIPropertyName, &portName) == noErr, let cfPortName = portName?.takeRetainedValue() {
-                            devices.append(Device(name: cfName as String, port: cfPortName as String))
+                        if MIDIObjectGetStringProperty(
+                            endpoint,
+                            kMIDIPropertyName,
+                            &portName
+                        ) == noErr,
+                            let cfPortName = portName?.takeRetainedValue()
+                        {
+                            devices.append(
+                                Device(
+                                    name: cfName as String,
+                                    port: cfPortName as String
+                                )
+                            )
                         }
                     }
                 }
@@ -51,17 +65,34 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print("Updating MIDI menu...")
 
         let menu = NSMenu()
-        menu.addItem(NSMenuItem(title: "Open Settings", action: #selector(openSettings), keyEquivalent: "s"))
+        menu.addItem(
+            NSMenuItem(
+                title: "Open Settings",
+                action: #selector(openSettings),
+                keyEquivalent: "s"
+            )
+        )
         menu.addItem(.separator())
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(quit), keyEquivalent: "q"))
+        menu.addItem(
+            NSMenuItem(
+                title: "Quit",
+                action: #selector(quit),
+                keyEquivalent: "q"
+            )
+        )
         statusItem.menu = menu
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        statusItem = NSStatusBar.system.statusItem(
+            withLength: NSStatusItem.squareLength
+        )
 
         if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: "pianokeys", accessibilityDescription: "MIDI Tool")
+            button.image = NSImage(
+                systemSymbolName: "pianokeys",
+                accessibilityDescription: "MIDI Tool"
+            )
         }
 
         // Select all devices by default
@@ -69,10 +100,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // for device in allDevices {
         //     selectedDevices.insert(device)
         // }
-        
+
         updateMenu()
 
-        MIDIClientCreateWithBlock("MIDIVelocityScalerClient" as CFString, &midiClient) { [weak self] notification in
+        MIDIClientCreateWithBlock(
+            "MIDIVelocityScalerClient" as CFString,
+            &midiClient
+        ) { [weak self] notification in
             print("Received MIDI system notification.")
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -100,7 +134,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Keep a reference
         self.settingsWindow = window
 
-        NotificationCenter.default.addObserver(forName: NSWindow.willCloseNotification, object: window, queue: .main) { [weak self] _ in
+        NotificationCenter.default.addObserver(
+            forName: NSWindow.willCloseNotification,
+            object: window,
+            queue: .main
+        ) { [weak self] _ in
             self?.settingsWindow = nil
         }
 
@@ -110,7 +148,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func quit() {
         NSApp.terminate(nil)
     }
-    
+
     @objc func velocityFieldChanged(_ sender: NSTextField) {
         if let value = Int(sender.stringValue), (1...100).contains(value) {
             velocityScalePercent = value
