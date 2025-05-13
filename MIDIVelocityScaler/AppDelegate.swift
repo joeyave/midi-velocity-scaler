@@ -10,6 +10,8 @@ import CoreMIDI
 import SwiftUI
 
 class AppDelegate: NSObject, NSApplicationDelegate {
+    // Ensure MIDI processing starts on app launch
+    private let appState = AppState.shared
     struct Device: Hashable {
         let name: String
         let port: String
@@ -64,7 +66,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func updateMenu() {
         print("Updating MIDI menu...")
 
+        let hasIAC = !AppState.shared.availableOutputDevices.isEmpty
+
         let menu = NSMenu()
+        if !hasIAC {
+            let errorItem = NSMenuItem(title: "⚠️ IAC Driver Disabled", action: nil, keyEquivalent: "")
+            errorItem.isEnabled = false
+            menu.addItem(errorItem)
+            menu.addItem(NSMenuItem.separator())
+        }
         menu.addItem(
             NSMenuItem(
                 title: "Open Settings",
@@ -100,6 +110,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // for device in allDevices {
         //     selectedDevices.insert(device)
         // }
+
+        // Force AppState initialization to start MIDI processing
+        _ = appState
 
         updateMenu()
 

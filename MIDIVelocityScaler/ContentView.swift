@@ -7,6 +7,7 @@
 
 import CoreMIDI
 import SwiftUI
+import Cocoa
 
 class AppState: ObservableObject {
     static let shared = AppState()
@@ -310,6 +311,11 @@ class AppState: ObservableObject {
         let state = Unmanaged<AppState>.fromOpaque(refCon).takeUnretainedValue()
         state.updateOutputDevices()
         state.updateInputDevices()
+        DispatchQueue.main.async {
+            if let delegate = NSApp.delegate as? AppDelegate {
+                delegate.updateMenu()
+            }
+        }
     }
 
     /// Restore all settings back to app defaults
@@ -340,7 +346,6 @@ struct ContentView: View {
         return fmt
     }()
     @StateObject private var state = AppState.shared
-    @State private var showIACAlert = false
 
     var body: some View {
         VStack(alignment: .leading) {
