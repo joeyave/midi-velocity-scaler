@@ -28,6 +28,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let hasIAC = !AppState.shared.availableOutputDevices.isEmpty
 
+        if let button = statusItem.button {
+            let symbol = hasIAC ? "pianokeys" : "exclamationmark.triangle.fill"
+            let desc = hasIAC ? "MIDI Tool" : "No IAC Driver"
+            button.image = NSImage(systemSymbolName: symbol, accessibilityDescription: desc)
+        }
+
         let menu = NSMenu()
         if !hasIAC {
             let errorItem = NSMenuItem(title: "⚠️ IAC Driver Disabled", action: nil, keyEquivalent: "")
@@ -57,13 +63,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(
             withLength: NSStatusItem.squareLength
         )
-
-        if let button = statusItem.button {
-            button.image = NSImage(
-                systemSymbolName: "pianokeys",
-                accessibilityDescription: "MIDI Tool"
-            )
-        }
 
         // Force AppState initialization to start MIDI processing
         _ = appState
