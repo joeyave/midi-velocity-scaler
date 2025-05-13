@@ -412,19 +412,8 @@ struct ContentView: View {
 
             Spacer()
         }
-        .onAppear {
-            if state.availableOutputDevices.isEmpty {
-                showIACAlert = true
-            }
-        }
         .padding()
         .frame(minWidth: 300, minHeight: 350)
-        .alert("No IAC Driver Detected",
-               isPresented: $showIACAlert) {
-            Button("OK", role: .cancel) { }
-        } message: {
-            Text("Please enable the IAC Driver in Audio MIDI Setup → Window → Show MIDI Studio, then activate it.")
-        }
     }
 }
 
